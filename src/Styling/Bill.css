@@ -1,0 +1,22 @@
+.Bill_container {
+  margin: 2% 5%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ 
+}
+.row1 {
+  display: flex;
+  column-gap: 20%;
+  background-color: #f88456;
+  color: white;
+  padding: 2% ;
+  padding-left: 8%;
+}
+.OrderDetail_container{
+    padding: 2%;
+    display: flex;
+    column-gap: 32%;
+    font-size: 1.4vw;
+}
+.Product_Container{
+
+}
