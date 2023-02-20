@@ -7,6 +7,7 @@ export const Cart = () => {
   const navigate = useNavigate();
   // state array
   const [cartArr, setCartArr] = useState([]);
+  console.log(cartArr);
   // state for keep the total price
   const [totalPrice, setTotalPrice] = useState(0);
   const dispatch = useDispatch();
@@ -155,7 +156,7 @@ export const Cart = () => {
             </div>
           </div>
         </div>
-      )}
+     )}
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 export const Login = () => {
   // ref for input box
   const PasswordRef = useRef();
@@ -59,13 +60,15 @@ export const Login = () => {
       </div>
       <div class="d-grid gap-2">
         <button
-          class="btn btn-outline-warning button"
+          class="btn btn-warning"
           type="button"
           onClick={LoginHandler}
         >
           Login
         </button>
       </div>
+
+      <Link to={"/"}>don't have an account? create here</Link>
     </div>
   );
 };

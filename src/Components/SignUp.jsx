@@ -102,14 +102,14 @@ export const SignUp = () => {
       </select>
       <div class="d-grid gap-2 mt-3">
         <button
-          class="btn btn-outline-warning button"
+          class="btn btn-warning"
           type="button"
           onClick={SignUpHandler}
         >
           Sign Up
         </button>
       </div>
-      <Link to="/Login">Already account</Link>
+      <Link to="/Login" className="mt-5">Already account</Link>
     </div>
   );
 };

@@ -40,12 +40,13 @@ export const CheckoutForm = () => {
   return (
     <div className="Checkoutform_container">
       <div className="Userdetail_container">
-        <h2 className="Cart_heading">Customer detail:</h2>
+        <h3 style={{marginRight:"57%"}}>Customer Detail:</h3>
+        <br />
         <div>
-          <span style={{ display: "flex", columnGap: "15%" }}>
+          <span style={{ display: "flex", columnGap: "5%" }}>
             <input
               type="email"
-              className="form-control w-75"
+              className="form-control"
               placeholder="First name"
               aria-label="First Name"
               aria-describedby="basic-addon1"
@@ -53,7 +54,7 @@ export const CheckoutForm = () => {
             />
             <input
               type="email"
-              className="form-control w-75"
+              className="form-control"
               placeholder="Last name"
               aria-label="Last name"
               aria-describedby="basic-addon1"

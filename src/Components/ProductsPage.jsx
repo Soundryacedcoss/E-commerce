@@ -1,3 +1,5 @@
+import { LinearProgress } from "@mui/material";
+import Box from "@mui/material/Box";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart, clearSearch, fetchProducts } from "../Slice/DataSlice";
@@ -5,6 +7,7 @@ import "../Styling/ProductPage.css";
 import { Navbar } from "./Navbar";
 export const ProductsPage = () => {
   // taking product data from redux
+  const data = useSelector((state) => state.DataSlice);
   const outputData = useSelector((state) => state.DataSlice.products.products);
   // taking search data from redux state
   const searchData = useSelector((state) => state.DataSlice.search);
@@ -48,15 +51,19 @@ export const ProductsPage = () => {
   }, [outputData]);
   // Add button function
   const AddtoCartHandler = (e) => {
-    cart.forEach((element) => {
-      if (parseInt(e.target.value) === element.id) {
-        alert("Item already in cart");
-        cartArr.splice(element, 1);
-        setCartArr([cartArr]);
-      }
-    });
+    if (cart.length !== 0) {
+      cart.forEach((element) => {
+        if (parseInt(e.target.value) === element.id) {
+          alert("Item already in cart");
+          cartArr.splice(element, 1);
+          setCartArr([cartArr]);
+        }
+      });
+    }
+    //
     outputData.forEach((element) => {
       if (element.id === parseInt(e.target.value)) {
+        console.log("hd");
         var obj = {
           name: element.title,
           id: element.id,
@@ -146,194 +153,214 @@ export const ProductsPage = () => {
   };
   return (
     <>
-      <Navbar />
-      <div style={{ paddingTop: "7%" }}>
-        <div
-          style={{
-            display: "flex",
-            columnGap: "2%",
-            marginLeft: "7%",
-            marginRight: "10%",
-            marginTop: "-5%",
-          }}
-          className="mt-5"
-        >
-          <select
-            class="form-select w-25"
-            aria-label="Default select example"
-            ref={OrderRef}
-          >
-            <option selected value="">
-              Sort by
-            </option>
-            <option value="Decending"> Low to High</option>
-            <option value="Accending">High to low</option>
-          </select>
-          <select
-            class="form-select w-25"
-            aria-label="Default select example"
-            ref={sortByRef}
-          >
-            <option selected value="">
-              sort according to
-            </option>
-            <option value="Price">Price</option>
-            <option value="Rating">Rating</option>
-          </select>
-          <button
-            className="btn btn-outline-warning button w-25"
-            onClick={FilterHandler}
-          >
-            Filter
-          </button>
-          <button
-            className="btn btn-outline-warning button w-25"
-            onClick={ClearHanlder}
-          >
-            Clear
-          </button>
-        </div>
-        {searchData.length !== 0 ? (
-          <div style={{ display: "flex" }}>
-            {searchData.map((val) => (
-              <div className="Product_card" style={{ marginLeft: "8%" }}>
-                <img src={val.image} alt="" srcset="" className="Product_img" />
-                <h3
-                  style={{
-                    height: "20%",
-                    marginBottom: "4%",
-                    marginLeft: "4%",
-                  }}
-                >
-                  {val.name}
-                </h3>
-                <div
-                  style={{
-                    display: "flex",
-                    columnGap: "30%",
-                    height: "5%",
-                    width: "100%",
-                    marginLeft: "4%",
-                  }}
-                >
-                  <p>STOCK:{val.stock}</p>
-                  <p style={{ align: "right", marginLeft: "30%" }}>
-                    {val.rating}⭐
-                  </p>
-                </div>
-                <p style={{ marginLeft: "4%" }}>PRICE:₹{val.price}</p>
-                {currentUser.role === "User" ? (
-                  <button
-                    className="btn btn-outline-warning button"
-                    style={{ margin: "0% 34%" }}
-                    onClick={AddtoCartHandler}
-                    value={val.id}
-                  >
-                    Add to cart
-                  </button>
-                ) : (
-                  <div class="input-group mb-3 ms-5 w-75">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="name@example.com"
-                      onChange={StockHandler}
-                    />
-
-                    <div class="input-group-append">
-                      <button
-                        class="btn btn-outline-secondary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={() => UpdateStockHandler(val.id)}
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+      <div>
+        <Navbar />
+      </div>
+      <div style={{ paddingTop: "7.5%" }}>
+        {data.loader === true ? (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
         ) : (
-          " "
-        )}
-        {searchData.length !== 0 ? (
-          <div>
-            <button
-              className="btn btn-outline-warning button"
-              onClick={ClearSearchHandler}
-              fullwidth
+          <>
+            <div
+              style={{
+                display: "flex",
+                columnGap: "2%",
+                marginLeft: "7%",
+                marginRight: "10%",
+                marginTop: "-5%",
+              }}
+              className="mt-5"
             >
-              Clear search
-            </button>
-          </div>
-        ) : (
-          " "
-        )}
-        <div className="Productpage_container">
-          {product.map((val) => (
-            <div className="Product_card">
-              <img src={val.image} alt="" srcset="" className="Product_img" />
-              <h3
-                style={{
-                  height: "20%",
-                  marginBottom: "4%",
-                  marginLeft: "4%",
-                }}
+              <select
+                class="form-select w-25"
+                aria-label="Default select example"
+                ref={OrderRef}
               >
-                {val.name}
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "30%",
-                  height: "5%",
-                  width: "100%",
-                  marginLeft: "4%",
-                }}
+                <option selected value="">
+                  Sort by
+                </option>
+                <option value="Decending"> Low to High</option>
+                <option value="Accending">High to low</option>
+              </select>
+              <select
+                class="form-select w-25"
+                aria-label="Default select example"
+                ref={sortByRef}
               >
-                <p>STOCK:{val.stock}</p>
-                <p style={{ align: "right", marginLeft: "30%" }}>
-                  {val.rating}⭐
-                </p>
+                <option selected value="">
+                  sort according to
+                </option>
+                <option value="Price">Price</option>
+                <option value="Rating">Rating</option>
+              </select>
+              <button
+                className="btn btn-outline-warning button w-25"
+                onClick={FilterHandler}
+              >
+                Filter
+              </button>
+              <button
+                className="btn btn-outline-warning button w-25"
+                onClick={ClearHanlder}
+              >
+                Clear filter
+              </button>
+            </div>
+            {searchData.length !== 0 ? (
+              <div style={{ display: "flex" }}>
+                {searchData.map((val) => (
+                  <div className="Product_card" style={{ marginLeft: "8%" }}>
+                    <img
+                      src={val.image}
+                      alt=""
+                      srcset=""
+                      className="Product_img"
+                    />
+                    <h3
+                      style={{
+                        height: "20%",
+                        marginBottom: "4%",
+                        marginLeft: "4%",
+                      }}
+                    >
+                      {val.name}
+                    </h3>
+                    <div
+                      style={{
+                        display: "flex",
+                        columnGap: "30%",
+                        height: "5%",
+                        width: "100%",
+                        marginLeft: "4%",
+                      }}
+                    >
+                      <p>STOCK:{val.stock}</p>
+                      <p style={{ align: "right", marginLeft: "30%" }}>
+                        {val.rating}⭐
+                      </p>
+                    </div>
+                    <p style={{ marginLeft: "4%" }}>PRICE:₹{val.price}</p>
+                    {currentUser.role === "User" ? (
+                      <button
+                        className="btn btn-outline-warning button"
+                        style={{ margin: "0% 34%" }}
+                        onClick={AddtoCartHandler}
+                        value={val.id}
+                      >
+                        Add to cart
+                      </button>
+                    ) : (
+                      <div class="input-group mb-3 ms-5 w-75">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="floatingInput"
+                          placeholder="name@example.com"
+                          onChange={StockHandler}
+                        />
+
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            id="button-addon2"
+                            onClick={() => UpdateStockHandler(val.id)}
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-              <p style={{ marginLeft: "4%" }}>PRICE:₹{val.price}</p>
-              {currentUser.role === "User" ? (
+            ) : (
+              " "
+            )}
+            {searchData.length !== 0 ? (
+              <div>
                 <button
                   className="btn btn-outline-warning button"
-                  style={{ margin: "0% 34%" }}
-                  onClick={AddtoCartHandler}
-                  value={val.id}
+                  onClick={ClearSearchHandler}
+                  fullwidth
                 >
-                  Add to cart
+                  Clear search
                 </button>
-              ) : (
-                <div class="input-group mb-3 ms-5 w-75">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="floatingInput"
-                    placeholder="name@example.com"
-                    onChange={StockHandler}
+              </div>
+            ) : (
+              " "
+            )}
+            <div className="Productpage_container">
+              {product.map((val) => (
+                <div className="Product_card">
+                  <img
+                    src={val.image}
+                    alt=""
+                    srcset=""
+                    className="Product_img"
                   />
-
-                  <div class="input-group-append">
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      id="button-addon2"
-                      onClick={() => UpdateStockHandler(val.id)}
-                    >
-                      Update
-                    </button>
+                  <h3
+                    style={{
+                      height: "20%",
+                      marginBottom: "4%",
+                      marginLeft: "4%",
+                    }}
+                  >
+                    {val.name}
+                  </h3>
+                  <div
+                    style={{
+                      display: "flex",
+                      columnGap: "30%",
+                      height: "5%",
+                      width: "100%",
+                      marginLeft: "4%",
+                    }}
+                  >
+                    <p>STOCK:{val.stock}</p>
+                    <p style={{ align: "right", marginLeft: "30%" }}>
+                      {val.rating}⭐
+                    </p>
                   </div>
+                  <p style={{ marginLeft: "4%" }}>PRICE:₹{val.price}</p>
+                  {currentUser.role === "User" ? (
+                    <button
+                      className="btn btn-outline-warning button"
+                      style={{ margin: "0% 34%" }}
+                      onClick={AddtoCartHandler}
+                      value={val.id}
+                    >
+                      Add to cart
+                    </button>
+                  ) : (
+                    <div class="input-group mb-3 ms-5 w-75">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                        onChange={StockHandler}
+                      />
+
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon2"
+                          onClick={() => UpdateStockHandler(val.id)}
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </>
   );

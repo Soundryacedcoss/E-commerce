@@ -39,7 +39,7 @@ export const Navbar = () => {
       <div className="Navbar_container fixed-top">
         <nav className="navbar navbar-expand-lg navbar-light navbar_Container ">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">
+            <a className="navbar-brand" href="//">
               <img src={logo} alt="" srcset="" className="w-50" />
             </a>
             <button

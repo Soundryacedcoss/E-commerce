@@ -11,6 +11,7 @@ const DataSlice = createSlice({
     cart: [],
     search: [],
     users: [],
+    loader: false,
   },
   reducers: {
     addData: (state, action) => {
@@ -32,9 +33,12 @@ const DataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.pending, (state, action) => {});
+    builder.addCase(fetchProducts.pending, (state, action) => {
+      state.loader = true;
+    });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload;
+      state.loader = false;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {});
   },
