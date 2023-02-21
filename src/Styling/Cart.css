@@ -32,7 +32,7 @@
   margin-top: 2%;
   margin-right: 4%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  height: 320px;
+  height: 400px;
 }
 p {
   text-shadow: 0.1em 0.1em 0 rgb(191, 186, 237);
@@ -47,7 +47,21 @@ p {
   color: white;
 }
 
-.cart_Empty{
+.cart_Empty {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 2% 16%;
+}
+@media only screen and (max-width: 1090px) {
+  div.Card_container {
+    display: inline;
+  }
+  div.Summery_container {
+    width: 80%;
+    margin: 1% 8%;
+  }
+  .Cart_product_container {
+    width: 80%;
+    margin: 1% 8%;
+
+  }
 }
