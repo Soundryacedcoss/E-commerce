@@ -51,7 +51,7 @@ export const ProductsPage = () => {
   }, [outputData]);
   // Add button function
   const AddtoCartHandler = (e) => {
-    if (cart.length !== 0) {
+    if (cart !== null) {
       cart.forEach((element) => {
         if (parseInt(e.target.value) === element.id) {
           alert("Item already in cart");
@@ -60,7 +60,6 @@ export const ProductsPage = () => {
         }
       });
     }
-    //
     outputData.forEach((element) => {
       if (element.id === parseInt(e.target.value)) {
         console.log("hd");
