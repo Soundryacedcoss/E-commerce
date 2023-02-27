@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 export const Login = () => {
@@ -6,15 +6,17 @@ export const Login = () => {
   const PasswordRef = useRef();
   const emailRef = useRef();
   const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
+
   // login button function
   const LoginHandler = () => {
     // TAking users account data from local storage
     var Allaccount = JSON.parse(localStorage.getItem("AllAccounts"));
     // validation
     if (emailRef.current.value === "") {
-      alert("PLease enter your email");
+      setMsg("PLease enter your email");
     } else if (PasswordRef.current.value === "") {
-      alert("PLese enter your password");
+      setMsg("PLese enter your password");
     } else {
       Allaccount.forEach((element) => {
         if (
@@ -32,10 +34,19 @@ export const Login = () => {
           alert("Dashboard will open");
           localStorage.setItem("CurrentUser", JSON.stringify(element));
           navigate("/AdminDashboard");
+        } else if (
+          element.email !== emailRef.current.value &&
+          element.password !== PasswordRef.current.value
+        ) {
+          setMsg("credential Not matched!");
         }
       });
     }
   };
+  const closeHandler = () => {
+    setMsg("");
+  };
+  console.log(msg);
   return (
     <div className="Login_container">
       <div className="input-group mb-3">
@@ -59,16 +70,30 @@ export const Login = () => {
         />
       </div>
       <div class="d-grid gap-2">
-        <button
-          class="btn btn-warning"
-          type="button"
-          onClick={LoginHandler}
-        >
+        <button class="btn btn-warning" type="button" onClick={LoginHandler}>
           Login
         </button>
       </div>
-
-      <Link to={"/"}>don't have an account? create here</Link>
+      <div style={{ marginTop: "5%" }}>
+        <Link to={"/"}>don't have an account? create here</Link>
+      </div>
+      {msg === "" ? (
+        ""
+      ) : (
+        <div
+          class="alert alert-warning alert-dismissible fade show mt-3"
+          role="alert"
+        >
+          {msg}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            onClick={closeHandler}
+          ></button>
+        </div>
+      )}
     </div>
   );
 };
