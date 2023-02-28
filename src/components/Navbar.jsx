@@ -33,7 +33,6 @@ export const Navbar = () => {
       SearchInput.current.value = "";
     }
   };
-
   return (
     <>
       <div className="Navbar_container fixed-top">

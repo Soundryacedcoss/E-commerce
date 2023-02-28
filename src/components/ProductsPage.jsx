@@ -11,7 +11,7 @@ export const ProductsPage = () => {
   const outputData = useSelector((state) => state.DataSlice.products.products);
   // taking search data from redux state
   const searchData = useSelector((state) => state.DataSlice.search);
-  // state for keepoing cart data
+  // state for storing cart data
   const [cartArr, setCartArr] = useState([]);
   // state for product data
   const [product, setProducts] = useState([]);
@@ -51,6 +51,7 @@ export const ProductsPage = () => {
   }, [outputData]);
   // Add button function
   const AddtoCartHandler = (e) => {
+    
     if (cart !== null) {
       cart.forEach((element) => {
         if (parseInt(e.target.value) === element.id) {
